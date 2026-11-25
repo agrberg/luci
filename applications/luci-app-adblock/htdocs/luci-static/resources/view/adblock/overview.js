@@ -967,6 +967,22 @@ return view.extend({
 		o.optional = true;
 		o.rmempty = true;
 
+		o = s.taboption('feeds', form.DummyValue, '_feeds6');
+		o.rawhtml = true;
+		o.default = '<hr style="width: 200px; height: 1px;" /><em style="color:#37c;font-weight:bold;">' + _('Remote Allowlists') + '</em>';
+
+		o = s.taboption('feeds', form.DynamicList, 'adb_allowurl', _('Allowlist URLs'), _('HTTPS URLs of remote allowlists, one domain per line. \
+			Whoever controls a URL decides which domains adblock unblocks, so pin the URL to a commit.'));
+		o.placeholder = 'https://example.com/allowlist.txt';
+		o.optional = true;
+		o.rmempty = true;
+		o.validate = function (section_id, value) {
+			if (!value || /^https:\/\/\S+$/.test(value)) {
+				return true;
+			}
+			return _('Please enter a valid HTTPS URL without spaces!');
+		};
+
 		/*
 			action buttons
 		*/
